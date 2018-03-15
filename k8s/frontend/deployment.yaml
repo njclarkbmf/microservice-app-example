@@ -20,9 +20,9 @@ spec:
           value: "8080"
         - name: TODOS_API_ADDRESS
           value: http://todos-api:8082
-        image: frontend
+        image: eivantsov/frontend
         name: frontend
         ports:
         - containerPort: 8080
-        imagePullPolicy: Never
+        imagePullPolicy: Always
       restartPolicy: Always
