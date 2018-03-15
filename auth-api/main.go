@@ -17,7 +17,7 @@ var (
 	ErrHttpGenericMessage = echo.NewHTTPError(http.StatusInternalServerError, "something went wrong, please try again later")
 
 	// ErrWrongCredentials indicates that login attempt failed because of incorrect login or password
-	ErrWrongCredentials = echo.NewHTTPError(http.StatusUnauthorized, "username or password is invalid")
+	ErrWrongCredentials = echo.NewHTTPError(http.StatusUnauthorized, "username or password is invalid...sorry about that")
 
 	jwtSecret = "myfancysecret"
 )

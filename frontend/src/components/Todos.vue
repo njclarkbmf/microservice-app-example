@@ -34,7 +34,7 @@
           >
         </div>
         <div class="col-sm-2 text-right">
-          <button type="submit" class="btn btn-primary" @click="addTask" >Add todo</button>
+          <button type="submit" class="btn btn-primary" @click="addTask" >Add a new cool todo now</button>
         </div>
       </div>
 
