@@ -7,5 +7,10 @@ metadata:
 spec:
   ports:
   - port: 8083
+    name: web
+    protocol: TCP
+  - port: 8000
+    name: debug
+    protocol: TCP
   selector:
     service: users-api

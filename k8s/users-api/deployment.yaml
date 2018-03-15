@@ -18,9 +18,10 @@ spec:
           value: myfancysecret
         - name: SERVER_PORT
           value: "8083"
-        image: users-api
+        image: eivantsov/users-api
         name: users-api
         ports:
         - containerPort: 8083
-        imagePullPolicy: Never
+        - containerPort: 8000
+        imagePullPolicy: Always
       restartPolicy: Always
