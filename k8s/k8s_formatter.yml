@@ -1,0 +1,226 @@
+apiVersion: v1
+kind: List
+items:
+ - 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   labels:
+    app: microservice-app-example
+    service: auth-api
+   name: auth-api
+  spec:
+   containers:
+    - 
+     env:
+      - 
+       name: AUTH_API_PORT
+       value: '8081'
+      - 
+       name: JWT_SECRET
+       value: myfancysecret
+      - 
+       name: USERS_API_ADDRESS
+       value: 'http://users-api:8083'
+     image: eivantsov/auth-api
+     imagePullPolicy: Always
+     name: auth-api
+     ports:
+      - 
+       containerPort: 8081
+     restartPolicy: Always
+     resources:
+      limits:
+       memory: 512Mi
+ - 
+  apiVersion: v1
+  kind: Service
+  metadata:
+   labels:
+    app: microservice-app-example
+   name: auth-api
+  spec:
+   ports:
+    - 
+     port: 8081
+   selector:
+    service: auth-api
+ - 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   labels:
+    app: microservice-app-example
+    service: frontend
+   name: frontend
+  spec:
+   containers:
+    - 
+     env:
+      - 
+       name: AUTH_API_ADDRESS
+       value: 'http://auth-api:8081'
+      - 
+       name: PORT
+       value: '8080'
+      - 
+       name: TODOS_API_ADDRESS
+       value: 'http://todos-api:8082'
+     image: eivantsov/frontend
+     name: frontend
+     ports:
+      - 
+       containerPort: 8080
+     imagePullPolicy: Always
+     restartPolicy: Always
+     resources:
+      limits:
+       memory: 512Mi
+ - 
+  apiVersion: v1
+  kind: Service
+  metadata:
+   labels:
+    app: microservice-app-example
+   name: frontend
+  spec:
+   ports:
+    - 
+     port: 8080
+   selector:
+    service: frontend
+   type: LoadBalancer
+ - 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   labels:
+    app: microservice-app-example
+    service: redis
+   name: redis
+  spec:
+   containers:
+    - 
+     env:
+      - 
+       name: AUTH_API_ADDRESS
+       value: 'http://auth-api:8081'
+     ports:
+      - 
+       containerPort: 6379
+     image: redis
+     name: redis
+     imagePullPolicy: Always
+     restartPolicy: Always
+     resources:
+      limits:
+       memory: 512Mi
+ - 
+  apiVersion: v1
+  kind: Service
+  metadata:
+   labels:
+    app: microservice-app-example
+   name: redis
+  spec:
+   ports:
+    - 
+     port: 6379
+   selector:
+    service: redis
+ - 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   labels:
+    app: microservice-app-example
+    service: todos-api
+   name: todos-api
+  spec:
+   containers:
+    - 
+     env:
+      - 
+       name: JWT_SECRET
+       value: myfancysecret
+      - 
+       name: TODO_API_PORT
+       value: '8082'
+      - 
+       name: REDIS_HOST
+       value: redis
+      - 
+       name: REDIS_PORT
+       value: '6379'
+     image: eivantsov/todos-api
+     name: todos-api
+     ports:
+      - 
+       containerPort: 8082
+     imagePullPolicy: Always
+     restartPolicy: Always
+     resources:
+      limits:
+       memory: 512Mi
+ - 
+  apiVersion: v1
+  kind: Service
+  metadata:
+   labels:
+    app: microservice-app-example
+   name: todos-api
+  spec:
+   ports:
+    - 
+     port: 8082
+   selector:
+    service: todos-api
+ - 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   labels:
+    app: microservice-app-example
+    service: users-api
+   name: users-api
+  spec:
+   containers:
+    - 
+     env:
+      - 
+       name: JWT_SECRET
+       value: myfancysecret
+      - 
+       name: SERVER_PORT
+       value: '8083'
+     image: eivantsov/users-api
+     name: users-api
+     ports:
+      - 
+       containerPort: 8083
+      - 
+       containerPort: 8000
+     imagePullPolicy: Always
+     restartPolicy: Always
+     resources:
+      limits:
+       memory: 1024Mi
+ - 
+  apiVersion: v1
+  kind: Service
+  metadata:
+   labels:
+    app: microservice-app-example
+   name: users-api
+  spec:
+   ports:
+    - 
+     name: web
+     port: 8083
+     protocol: TCP
+    - 
+     port: 8000
+     name: debug
+     protocol: TCP
+   selector:
+    service: users-api

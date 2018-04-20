@@ -11,4 +11,4 @@ RUN chgrp -R 0 /root && \
                chmod -R g+rwX /root
 COPY . .
 ENV HOME /root
-CMD cd /usr/src/app && sleep 10 && npm start && tail -f /dev/null
+CMD cd /usr/src/app && sleep 60 && npm start && tail -f /dev/null
