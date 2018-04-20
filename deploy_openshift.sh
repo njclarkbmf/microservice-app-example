@@ -29,6 +29,11 @@ fi
 # applying k8s resources
 cd k8s
 
+cd redis
+oc apply -f deployment.yaml
+oc apply -f service.yaml
+
+cd ..
 cd auth-api
 oc apply -f deployment.yaml
 oc apply -f service.yaml
@@ -43,12 +48,6 @@ cd ..
 cd users-api
 oc apply -f deployment.yaml
 oc apply -f service.yaml
-
-cd ..
-cd redis
-oc apply -f deployment.yaml
-oc apply -f service.yaml
-
 
 cd ..
 cd todos-api

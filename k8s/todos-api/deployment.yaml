@@ -22,7 +22,7 @@ spec:
           value: "redis"
         - name: REDIS_PORT
           value: "6379"
-        image: ibuziuk/todos-api
+        image: eivantsov/todos-api
         name: todos-api
         ports:
         - containerPort: 8082

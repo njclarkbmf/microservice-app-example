@@ -27,6 +27,11 @@ The easiest way is to use `docker-compose`:
 docker-compose up --build
 ```
 
+## OpenShift
+
+In order to deploy the app on OpenShift just execute `./deploy_openshift.sh`. By default deployment destination is the dev cluster, but you can point it to minishift, oso, oso pro, ocp etc by setting `OPENSHIFT_ENDPOINT` env var.
+NOTE: `OPENSHIFT_TOKEN` env var with valid token must be set before executing the script.
+
 ## Contribution
 
 This is definitely a contrived project, so it can be extended in any way you want. If you have a crazy idea (like RESTful API in Haskell that counts kittens of particular user) - just submit a PR.
