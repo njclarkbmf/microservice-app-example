@@ -1,0 +1,203 @@
+{
+  "scope": "advanced",
+  "description": "Microservice App Stack",
+  "tags": [
+    "Java",
+    "Maven",
+    "Git",
+    "Golang",
+    "Vue.js"
+  ],
+  "creator": "che",
+  "workspaceConfig": {
+    "environments": {
+      "default": {
+        "recipe": {
+          "contentType": "text/x-yaml",
+          "type": "openshift",
+          "content": "apiVersion: v1\nkind: List\nitems:\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   labels:\n    app: microservice-app-example\n    service: auth-api\n   name: auth-api\n  spec:\n   containers:\n    - \n     env:\n      - \n       name: AUTH_API_PORT\n       value: '8081'\n      - \n       name: JWT_SECRET\n       value: myfancysecret\n      - \n       name: USERS_API_ADDRESS\n       value: 'http://users-api:8083'\n     image: eivantsov/auth-api\n     imagePullPolicy: Always\n     name: auth-api\n     ports:\n      - \n       containerPort: 8081\n     restartPolicy: Always\n     resources:\n      limits:\n       memory: 512Mi\n - \n  apiVersion: v1\n  kind: Service\n  metadata:\n   labels:\n    app: microservice-app-example\n   name: auth-api\n  spec:\n   ports:\n    - \n     port: 8081\n   selector:\n    service: auth-api\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   labels:\n    app: microservice-app-example\n    service: frontend\n   name: frontend\n  spec:\n   containers:\n    - \n     env:\n      - \n       name: AUTH_API_ADDRESS\n       value: 'http://auth-api:8081'\n      - \n       name: PORT\n       value: '8080'\n      - \n       name: TODOS_API_ADDRESS\n       value: 'http://todos-api:8082'\n     image: eivantsov/frontend\n     name: frontend\n     ports:\n      - \n       containerPort: 8080\n     imagePullPolicy: Always\n     restartPolicy: Always\n     resources:\n      limits:\n       memory: 512Mi\n - \n  apiVersion: v1\n  kind: Service\n  metadata:\n   labels:\n    app: microservice-app-example\n   name: frontend\n  spec:\n   ports:\n    - \n     port: 8080\n   selector:\n    service: frontend\n   type: LoadBalancer\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   labels:\n    app: microservice-app-example\n    service: redis\n   name: redis\n  spec:\n   containers:\n    - \n     env:\n      - \n       name: AUTH_API_ADDRESS\n       value: 'http://auth-api:8081'\n     ports:\n      - \n       containerPort: 6379\n     image: redis\n     name: redis\n     imagePullPolicy: Always\n     restartPolicy: Always\n     resources:\n      limits:\n       memory: 512Mi\n - \n  apiVersion: v1\n  kind: Service\n  metadata:\n   labels:\n    app: microservice-app-example\n   name: redis\n  spec:\n   ports:\n    - \n     port: 6379\n   selector:\n    service: redis\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   labels:\n    app: microservice-app-example\n    service: todos-api\n   name: todos-api\n  spec:\n   containers:\n    - \n     env:\n      - \n       name: JWT_SECRET\n       value: myfancysecret\n      - \n       name: TODO_API_PORT\n       value: '8082'\n      - \n       name: REDIS_HOST\n       value: redis\n      - \n       name: REDIS_PORT\n       value: '6379'\n     image: eivantsov/todos-api\n     name: todos-api\n     ports:\n      - \n       containerPort: 8082\n     imagePullPolicy: Always\n     restartPolicy: Always\n     resources:\n      limits:\n       memory: 512Mi\n - \n  apiVersion: v1\n  kind: Service\n  metadata:\n   labels:\n    app: microservice-app-example\n   name: todos-api\n  spec:\n   ports:\n    - \n     port: 8082\n   selector:\n    service: todos-api\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   labels:\n    app: microservice-app-example\n    service: users-api\n   name: users-api\n  spec:\n   containers:\n    - \n     env:\n      - \n       name: JWT_SECRET\n       value: myfancysecret\n      - \n       name: SERVER_PORT\n       value: '8083'\n     image: eivantsov/users-api\n     name: users-api\n     ports:\n      - \n       containerPort: 8083\n      - \n       containerPort: 8000\n     imagePullPolicy: Always\n     restartPolicy: Always\n     resources:\n      limits:\n       memory: 1536Mi\n - \n  apiVersion: v1\n  kind: Service\n  metadata:\n   labels:\n    app: microservice-app-example\n   name: users-api\n  spec:\n   ports:\n    - \n     name: web\n     port: 8083\n     protocol: TCP\n    - \n     port: 8000\n     name: debug\n     protocol: TCP\n   selector:\n    service: users-api\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   name: pod1\n  spec:\n   containers:\n    - \n     image: 'eclipse/ubuntu_jdk8:latest'\n     name: java\n     resources:\n      limits:\n       memory: 1536Mi\n - \n  apiVersion: v1\n  kind: Pod\n  metadata:\n   name: pod2\n  spec:\n   containers:\n    - \n     image: eivantsov/gols\n     name: go\n     resources:\n      limits:\n       memory: 512Mi\n"
+        },
+        "machines": {
+          "users-api/users-api": {
+            "env": {},
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal"
+            ],
+            "volumes": {
+              "projects": {
+                "path": "/projects"
+              }
+            },
+            "servers": {},
+            "attributes": {
+              "memoryLimitBytes": "1610612736"
+            }
+          },
+          "pod1/java": {
+            "env": {},
+            "installers": [
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent"
+            ],
+            "volumes": {},
+            "servers": {},
+            "attributes": {
+              "memoryLimitBytes": "1610612736"
+            }
+          },
+          "frontend/frontend": {
+            "env": {},
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal"
+            ],
+            "volumes": {
+              "projects": {
+                "path": "/projects"
+              }
+            },
+            "servers": {
+              "web": {
+                "attributes": {},
+                "protocol": "http",
+                "port": "8080"
+              }
+            },
+            "attributes": {
+              "memoryLimitBytes": "536870912"
+            }
+          },
+          "pod2/go": {
+            "env": {},
+            "installers": [],
+            "volumes": {
+              "projects": {
+                "path": "/projects"
+              }
+            },
+            "servers": {
+              "golang-ls": {
+                "attributes": {
+                  "internal": "true",
+                  "type": "ls",
+                  "config": "{\"id\":\"golang\", \"languageIds\":[go]}"
+                },
+                "protocol": "tcp",
+                "port": "5555"
+              }
+            },
+            "attributes": {
+              "memoryLimitBytes": "536870912"
+            }
+          },
+          "redis/redis": {
+            "env": {},
+            "installers": [],
+            "volumes": {},
+            "servers": {},
+            "attributes": {
+              "memoryLimitBytes": "536870912"
+            }
+          },
+          "todos-api/todos-api": {
+            "env": {},
+            "installers": [
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.exec"
+            ],
+            "volumes": {
+              "projects": {
+                "path": "/projects"
+              }
+            },
+            "servers": {},
+            "attributes": {
+              "memoryLimitBytes": "536870912"
+            }
+          },
+          "auth-api/auth-api": {
+            "env": {},
+            "installers": [
+              "org.eclipse.che.exec"
+            ],
+            "volumes": {
+              "projects": {
+                "path": "/projects"
+              }
+            },
+            "servers": {},
+            "attributes": {
+              "memoryLimitBytes": "536870912"
+            }
+          }
+        }
+      }
+    },
+    "commands": [
+      {
+        "commandLine": "echo \"[INFO]: Killing auth server...\"\npid=$(netstat -tulpn | grep 8081 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncp ${current.project.path}/auth-api/*.go /$GOPATH/src/app\ncd $GOPATH/src/app\necho \"[INFO]: Compiling binary...\"\ngo build -o auth-api\necho \"[INFO]: Starting auth server\"\n./auth-api",
+        "name": "auth-api-update",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "commandLine": "cp -r /usr/src/app/node_modules ${current.project.path}/todos-api\npid=$(netstat -tulpn | grep 8082 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncd ${current.project.path}/todos-api\nnpm start",
+        "name": "todos-api-update",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      }
+    ],
+    "projects": [
+      {
+        "source": {
+          "location": "https://github.com/eivantsov/microservice-app-example",
+          "type": "git",
+          "parameters": {}
+        },
+        "mixins": [
+          "pullrequest"
+        ],
+        "problems": [],
+        "links": [],
+        "name": "microservice-app-example",
+        "type": "blank",
+        "path": "/microservice-app-example",
+        "attributes": {
+          "contribute_to_branch": [
+            "master"
+          ],
+          "commands": [
+            "{\"commandLine\":\"echo \\\"[INFO]: Stopping users server...\\\"\\npid=$(netstat -tulpn | grep 8083 | awk '{print $7}' | rev | cut -d\\\"/\\\" -f2-  | rev)\\nkill $pid\\ncd ${current.project.path}/target\\njava -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Dserver.port=8083 *.jar\\n\", \"name\":\"users-api-update\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
+            "{\"commandLine\":\"echo \\\"[INFO]: Compiling binary...\\\"\\ncd ${current.project.path}\\nmvn clean install\", \"name\":\"users-api-build\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
+            "{\"commandLine\":\"echo \\\"[INFO]: Stopping server...\\\"\\npid=$(netstat -tulpn | grep 8080 | awk '{print $7}' | rev | cut -d\\\"/\\\" -f2-  | rev)\\nkill $pid\\ncp -r /projects1/node_modules ${current.project.path}/frontend\\ncd ${current.project.path}/frontend\\nnpm start\", \"name\":\"frontend\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}"
+          ]
+        }
+      },
+      {
+        "source": {
+          "parameters": {}
+        },
+        "mixins": [],
+        "problems": [],
+        "links": [],
+        "name": "users-api",
+        "type": "maven",
+        "path": "/microservice-app-example/users-api",
+        "attributes": {}
+      }
+    ],
+    "defaultEnv": "default",
+    "name": "wksp-r90o",
+    "links": []
+  },
+  "components": [],
+  "name": "Microservice App Stack",
+  "id": "stackgy0t5xs730cmft62"
+}
