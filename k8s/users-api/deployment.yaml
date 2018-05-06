@@ -18,7 +18,7 @@ spec:
           value: myfancysecret
         - name: SERVER_PORT
           value: "8083"
-        image: ibuziuk/user-api:latest
+        image: ibuziuk/user-api:demo
         name: users-api
         ports:
         - containerPort: 8083
