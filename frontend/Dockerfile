@@ -10,5 +10,3 @@ COPY . /projects1
 RUN cd /projects1/ && npm install
 ENV HOME /root
 
-CMD cd /projects1 && \
-    npm start & tail -f /dev/null
