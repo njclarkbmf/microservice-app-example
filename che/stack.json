@@ -192,6 +192,15 @@
                 }
             },
             {
+                "commandLine": "mvn clean install -f ${current.project.path}/users-api",
+                "name": "user-api-build",
+                "type": "mvn",
+                "attributes": {
+                    "goal": "Build",
+                    "previewUrl": ""
+                }
+            },
+            {
                 "commandLine": "pid=$(netstat -tulpn | grep 8083 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncd /projects/microservice-app-example/users-api/target\necho \"[INFO]: Starting users-api app...\"\njava -jar *.jar\necho \"[INFO]: App is started\"",
                 "name": "user-api-start",
                 "type": "custom",
@@ -205,7 +214,7 @@
                 "name": "user-api-stop",
                 "type": "custom",
                 "attributes": {
-                    "goal": "Run",
+                    "goal": "Common",
                     "previewUrl": ""
                 }
             },
