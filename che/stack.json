@@ -147,11 +147,20 @@
                 }
             },
             {
+                "commandLine": "echo \"[INFO]: Starting frontend...\"\ncp -r /projects1/node_modules ${current.project.path}/frontend\ncd ${current.project.path}/frontend\nnpm start",
+                "name": "frontend-start",
+                "type": "custom",
+                "attributes": {
+                    "goal": "Run",
+                    "previewUrl": ""
+                }
+            },
+            {
                 "commandLine": "pid=$(netstat -tulpn | grep 8080 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\necho \"[INFO]: Frontend is stopped...\"\n",
                 "name": "frontend-stop",
                 "type": "custom",
                 "attributes": {
-                    "goal": "Run",
+                    "goal": "Common",
                     "previewUrl": ""
                 }
             },
@@ -194,15 +203,6 @@
             {
                 "commandLine": "pid=$(netstat -tulpn | grep 8083 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\necho \"[INFO]: App is stopped\"",
                 "name": "user-api-stop",
-                "type": "custom",
-                "attributes": {
-                    "goal": "Run",
-                    "previewUrl": ""
-                }
-            },
-            {
-                "commandLine": "pid=$(netstat -tulpn | grep 8080 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncd  /projects/microservice-app-example/frontend/\nnpm start",
-                "name": "frontend-start",
                 "type": "custom",
                 "attributes": {
                     "goal": "Run",
