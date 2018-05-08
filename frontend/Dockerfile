@@ -10,3 +10,5 @@ COPY . /projects1
 RUN cd /projects1/ && npm install
 ENV HOME /root
 
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
