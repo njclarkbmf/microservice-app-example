@@ -18,6 +18,4 @@ RUN ./mvnw install
 ENV HOME /root
 ENV user.home /root
 #ENV M2_HOME /root/.m2
-CMD cd /usr/src/app/target && \
-    java -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Dserver.port=8083 users-api-0.0.1-SNAPSHOT.jar & \
-    tail -f /dev/null
+CMD tail -f /dev/null
