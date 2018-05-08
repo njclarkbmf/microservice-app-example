@@ -1,0 +1,7 @@
+- Add preview URLs for every frontend command
+- Add Build commands (for user-api, todo-api, auth-api)
+- Specify the right verxion of the Eugene images where the run commands work correctly
+- Use custom images to avoid that the services are started at workspace boot
+- Automatically set usera-api nature to maven project
+- OpenShift BuildConfig (source2image) to auto build user-api
+- Deploy multi-user Che (for factories)
