@@ -18,4 +18,4 @@ RUN echo "/go/src/app/auth-api exec "\$@"" > entrypoint.sh && \
     chmod +x entrypoint.sh
 RUN chgrp -R 0 /go && \
                chmod -R g+rwX /go
-CMD /go/src/app/auth-api & tail -f /dev/null
+CMD tail -f /dev/null
