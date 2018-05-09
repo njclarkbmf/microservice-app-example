@@ -138,7 +138,7 @@
         },
         "commands": [
             {
-                "commandLine": "echo \"[INFO]: Starting frontend...\"\ncp -r /projects1/node_modules ${current.project.path}/frontend\ncd ${current.project.path}/frontend\nnpm start",
+                "commandLine": "echo \"[INFO]: Starting frontend...\"\ncp -r /projects1/node_modules /projects/microservice-app-example/frontend\ncd /projects/microservice-app-example/frontend\nnpm start",
                 "name": "frontend-start",
                 "type": "custom",
                 "attributes": {
@@ -156,7 +156,7 @@
                 }
             },
             {
-                "commandLine": "cp -r /usr/src/app/node_modules ${current.project.path}/todos-api\ncd ${current.project.path}/todos-api\nnpm start",
+                "commandLine": "cp -r /usr/src/app/node_modules /projects/microservice-app-example/todos-api\ncd /projects/microservice-app-example/todos-api\nnpm start",
                 "name": "todos-api-start",
                 "type": "custom",
                 "attributes": {
@@ -174,7 +174,7 @@
                 }
             },
             {
-                "commandLine": "pid=$(netstat -tulpn | grep 8082 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncp -r /usr/src/app/node_modules ${current.project.path}/todos-api\ncd ${current.project.path}/todos-api\nnpm start",
+                "commandLine": "pid=$(netstat -tulpn | grep 8082 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncp -r /usr/src/app/node_modules /projects/microservice-app-example/todos-api\ncd /projects/microservice-app-example/todos-api\nnpm start",
                 "name": "todos-api-update",
                 "type": "custom",
                 "attributes": {
@@ -183,7 +183,7 @@
                 }
             },
             {
-                "commandLine": "echo \"[INFO]: Starting auth-api\"\ncp ${current.project.path}/auth-api/*.go /$GOPATH/src/app\ncd $GOPATH/src/app\necho \"[INFO]: Compiling binary...\"\ngo build -o auth-api\necho \"[INFO]: Starting auth server\"\n./auth-api",
+                "commandLine": "echo \"[INFO]: Starting auth-api\"\ncp /projects/microservice-app-example/auth-api/*.go /$GOPATH/src/app\ncd $GOPATH/src/app\necho \"[INFO]: Compiling binary...\"\ngo build -o auth-api\necho \"[INFO]: Starting auth server\"\n./auth-api",
                 "name": "auth-api-start",
                 "type": "custom",
                 "attributes": {
@@ -201,7 +201,7 @@
                 }
             },
             {
-                "commandLine": "mvn clean install -f ${current.project.path}/users-api",
+                "commandLine": "mvn clean install -f /projects/microservice-app-example/users-api",
                 "name": "user-api-build",
                 "type": "mvn",
                 "attributes": {
@@ -228,7 +228,7 @@
                 }
             },
             {
-                "commandLine": "pid=$(netstat -tulpn | grep 8083 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncd ${current.project.path}/users-api/target\necho \"[INFO]: Starting users-api app in debug mode...\"\njava -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Dserver.port=8083 *.jar\necho \"[INFO]: App is started in debug mode\"",
+                "commandLine": "pid=$(netstat -tulpn | grep 8083 | awk '{print $7}' | rev | cut -d\"/\" -f2-  | rev)\nkill $pid\ncd /projects/microservice-app-example/users-api/target\necho \"[INFO]: Starting users-api app in debug mode...\"\njava -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Dserver.port=8083 *.jar\necho \"[INFO]: App is started in debug mode\"",
                 "name": "user-api-debug",
                 "type": "custom",
                 "attributes": {
