@@ -31,7 +31,7 @@ public class UsersController {
     public User getUser(HttpServletRequest request, @PathVariable("username") String username) {
 
         Object requestAttribute = request.getAttribute("claims");
-        if((requestAttribute != null) || !(requestAttribute instanceof Claims)){
+        if((requestAttribute == null) || !(requestAttribute instanceof Claims)){
             throw new RuntimeException("Did not receive required data from JWT token");
         }
 
