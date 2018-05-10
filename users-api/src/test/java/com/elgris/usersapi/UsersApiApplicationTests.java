@@ -21,7 +21,8 @@ import com.elgris.usersapi.models.User;
 public class UsersApiApplicationTests {
     
     @Test
-    public void adminLogin() {
+    public void dummyTest() {
+        assertEquals(true, true);
     }
 
 }
