@@ -1,5 +1,5 @@
-# Example microservice Application [![Contribute](http://che-che-multi-user.96.126.96.143.nip.io/factory/resources/factory-contribute.svg)](http://che-che-multi-user.96.126.96.143.nip.io/f?name=rhsummit-factory&user=mario)
-
+[![Contribute](http://che-che-multi-user.96.126.96.143.nip.io/factory/resources/factory-contribute.svg)](http://che-che-multi-user.96.126.96.143.nip.io/f?name=rhsummit-factory&user=mario)
+# Example microservice Application
 
 This is an example of web application comprising of several components communicating to each other. In other words, this is an example of microservice app. Why is it better than many other examples? Well, because these microservices are written in different languages. This approach gives you flexibility for running experiments in polyglot environment.
 
