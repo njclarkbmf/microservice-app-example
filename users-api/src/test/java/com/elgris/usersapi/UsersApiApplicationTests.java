@@ -19,9 +19,6 @@ import com.elgris.usersapi.models.User;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UsersApiApplicationTests {
-    
-    @Autowired
-    UsersController controller;
 
     @Test
     public void adminLogin() {
