@@ -8,6 +8,9 @@ OPENSHIFT_PROJECT=${OPENSHIFT_PROJECT:-${DEFAULT_OPENSHIFT_PROJECT}}
 DEFAULT_USE_VALID_TLS_CERTIFICATE="false"
 USE_VALID_TLS_CERTIFICATE=${USE_VALID_TLS_CERTIFICATE:-${DEFAULT_USE_VALID_TLS_CERTIFICATE}}
 
+DEFAULT_SETUP_CICD="false"
+SETUP_CICD=${SETUP_CICD:-${DEFAULT_SETUP_CICD}}
+
 echo -n "Logging using OpenShift endpoint \"${OPENSHIFT_ENDPOINT}\"..."
 if [ -z "${OPENSHIFT_TOKEN+x}" ]; then
   echo "**ERROR**: OPENSHIFT_TOKEN is not provided. Aborting."
@@ -24,6 +27,14 @@ if ! oc get project "${OPENSHIFT_PROJECT}" &> /dev/null; then
 else
     echo "Project \"${OPENSHIFT_PROJECT}\" already exists. Please remove project before running this script."
     exit 1
+fi
+
+if [ "${SETUP_CICD}" == "true" ]; then
+  echo "Deploying BuildConfig to setup CI/CD"
+  oc apply -f openshift/openjdk-s2i-imagestream.yml
+  oc apply -f openshift/is.yml
+  oc apply -f openshift/whsecret.yml
+  oc apply -f openshift/bc.yml
 fi
 
 # applying k8s resources
@@ -46,8 +57,13 @@ oc apply -f service.yaml
 
 cd ..
 cd users-api
-oc apply -f deployment.yaml
-oc apply -f service.yaml
+if [ "${SETUP_CICD}" == "true" ]; then
+  oc apply -f deployment-cicd.yaml
+  oc apply -f service-cicd.yaml
+else
+  oc apply -f deployment.yaml
+  oc apply -f service.yaml
+fi
 
 cd ..
 cd todos-api
