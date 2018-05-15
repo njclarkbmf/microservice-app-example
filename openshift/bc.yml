@@ -1,0 +1,29 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "users-api-build"
+spec:
+  runPolicy: "Serial"
+  triggers:
+    -
+      type: "ImageChange"
+    -
+      type: "GitHub"
+      github:
+        secretReference:
+          name: "github-webhook-secret"
+  source:
+    git:
+      uri: "https://github.com/ibuziuk/microservice-app-example"
+      ref: "master"
+    contextDir: "users-api"
+  strategy:
+    sourceStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "redhat-openjdk18-openshift:latest"
+      incremental: true
+  output: 
+    to:
+      kind: "ImageStreamTag"
+      name: "users-api:latest"

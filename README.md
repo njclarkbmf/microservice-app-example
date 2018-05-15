@@ -32,6 +32,12 @@ docker-compose up --build
 In order to deploy the app on OpenShift just execute `./deploy_openshift.sh`. By default deployment destination is the dev cluster, but you can point it to minishift, oso, oso pro, ocp etc by setting `OPENSHIFT_ENDPOINT` env var.
 NOTE: `OPENSHIFT_TOKEN` env var with valid token must be set before executing the script.
 
+To enable CI/CD for `user-api` using an OpenShift `BuildConfig` triggered by a GitHub webhook you need to:
+
+- Set a base64 encoded secret in file `openshift/whsecret.yaml` that will be used by the webhook
+- Set `SETUP_CICD="true"` and run `./deploy_openshift.sh`
+- Configure the GitHub Webhook ([read the documentation](https://docs.openshift.org/latest/dev_guide/builds/triggering_builds.html#github-webhooks))
+
 ## Contribution
 
 This is definitely a contrived project, so it can be extended in any way you want. If you have a crazy idea (like RESTful API in Haskell that counts kittens of particular user) - just submit a PR.
